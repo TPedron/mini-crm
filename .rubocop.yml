@@ -1,0 +1,20 @@
+Metrics/LineLength:
+  Max: 120
+
+Metrics/MethodLength: 
+  Max: 20
+
+Metrics/ClassLength:
+  Max: 1500
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/MixinUsage:
+  Enabled: false

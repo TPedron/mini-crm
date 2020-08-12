@@ -12,4 +12,9 @@ Next, run git clone https://github.com/TPedron/mini-crm.git to clone the reposit
 1. Run `docker-compose build` to build the backend image.
 2. Run `docker-compose up -d` to bring the API up, accepting requests at `http://localhost:3001`.
 3. Run `CONTAINERID=$(docker ps -qf "name=web"); docker exec -it $CONTAINERID rake db:migrate;docker exec -it $CONTAINERID rake db:setup` to setup the database.
-4. 
+
+# Code Quality & Linting
+
+The `Rubocop` gem has been installed. See `.rubocop.yml` for configurations.
+
+Run `rubocop` before merge and fix any linting issues presented.
