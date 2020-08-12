@@ -56,18 +56,72 @@ class Api::V1::ContactsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'GET - List contacts ordered by last_name ASC successfully' do
-    contact_last = create(:contact, last_name: "Zebra")
-    contact_first = create(:contact, last_name: "Apple")
+    contact_last = create(:contact, last_name: 'Zebra')
+    contact_first = create(:contact, last_name: 'Apple')
 
     get '/api/v1/contacts'
     assert_response :ok
     json = response.parsed_body.deep_symbolize_keys
-    
+
     assert json.dig(:data)
     assert_equal 2, json.dig(:data).size
     assert_equal contact_first.uuid, json.dig(:data, 0, :id)
     assert_equal contact_first.last_name, json.dig(:data, 0, :attributes, :lastName)
     assert_equal contact_last.uuid, json.dig(:data, 1, :id)
     assert_equal contact_last.last_name, json.dig(:data, 1, :attributes, :lastName)
+  end
+
+  test 'PATCH - Update Contact fails when it cannot be found' do
+    contact = create(:contact)
+
+    patch "/api/v1/contacts/#{contact.uuid}", params: {
+      data: {
+        id: contact.uuid,
+        type: 'contact',
+        attributes: {
+          first_name: expected_first_name = 'Peter',
+          last_name: expected_last_name = 'Griffin',
+          email: expected_email = 'pea.tear.griffin@gmail.com'
+        }
+      }
+    }
+
+    assert_response :ok
+    contact.reload
+    json = response.parsed_body.deep_symbolize_keys
+
+    assert_equal contact.uuid, json.dig(:data, :id)
+    assert_equal 'contact', json.dig(:data, :type)
+    assert_equal expected_first_name, json.dig(:data, :attributes, :firstName)
+    assert_equal contact.first_name, json.dig(:data, :attributes, :firstName)
+    assert_equal expected_last_name, json.dig(:data, :attributes, :lastName)
+    assert_equal contact.last_name, json.dig(:data, :attributes, :lastName)
+    assert_equal expected_email, json.dig(:data, :attributes, :email)
+    assert_equal contact.email, json.dig(:data, :attributes, :email)
+  end
+
+  test 'PATCH - Update Contact successfully' do
+    patch "/api/v1/contacts/#{uuid = SecureRandom.uuid}", params: {
+      data: {
+        id: uuid,
+        type: 'contact',
+        attributes: {
+          first_name: 'Peter',
+          last_name: 'Griffin',
+          email: 'pea.tear.griffin@gmail.com'
+        }
+      }
+    }
+
+    assert_response :not_found
+    json = response.parsed_body.deep_symbolize_keys
+
+    expected_error_response = {
+      status: 404,
+      title: "Couldn't find Contact",
+      detail: 'Contact not found'
+    }
+
+    assert_equal expected_error_response, json
   end
 end

@@ -3,6 +3,8 @@ class ErrorMessageBuilderService
     case error
     when ActiveRecord::RecordInvalid
       handle_active_record_error(error.record.errors.to_h)
+    when ActiveRecord::RecordNotFound
+      handle_record_not_found(error)
     end
   end
 
@@ -16,5 +18,17 @@ class ErrorMessageBuilderService
       )
     end
     errors
+  end
+
+  private_class_method def self.handle_record_not_found(error)
+    {
+      errors: [
+        {
+          status: 404,
+          title: error.message,
+          detail: "#{error.model} not found"
+        }
+      ]
+    }
   end
 end
