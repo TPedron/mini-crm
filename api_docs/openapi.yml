@@ -10,6 +10,8 @@ servers:
 
 tags:
   - name: Contact
+  - name: Tag
+
 paths:
   /api/v1/contacts:
     post:
@@ -27,7 +29,7 @@ paths:
                 value:
                   $ref: "examples/api/v1/contact/create_request.example.json"
       responses:
-        200:
+        201:
           description: Contact Created Response
           content: 
             application/vnd.api+json:
@@ -122,3 +124,40 @@ paths:
                   summary: Errors response
                   value:
                     $ref: "examples/api/v1/contact/delete_request_error.example.json"
+  
+  /api/v1/tags:
+    post:
+      tags:
+        - Tag
+      summary: Find or Create a Tag
+      requestBody:
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: "schemas/api/v1/tag/create_request.schema.json"
+            examples:
+              new-tag:
+                summary: A new Tag
+                value:
+                  $ref: "examples/api/v1/tag/create_request.example.json"
+      responses:
+        200:
+          description: Tag Created or Found Response
+          content: 
+            application/vnd.api+json:
+              schema:
+                $ref: "schemas/api/v1/tag/create_response.schema.json"
+              examples:
+                response:
+                  summary: A new Tag
+                  value:
+                    $ref: "examples/api/v1/tag/create_response.example.json"
+        422:
+          description: Tag Creation Failed Response
+          content:
+            application/vnd.api+json:
+              examples:
+                errors:
+                  summary: Errors response
+                  value:
+                    $ref: "examples/api/v1/tag/create_request_error.example.json"

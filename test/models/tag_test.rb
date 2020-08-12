@@ -10,6 +10,14 @@ class TagTest < ActiveSupport::TestCase
     assert_equal expected_name, tag.name
   end
 
+  test 'Cannot create tag with nil name' do
+    assert_raises ActiveRecord::RecordInvalid do
+      Tag.create!(
+        name: nil
+      )
+    end
+  end
+
   test 'Cannot create duplicate tags' do
     Tag.create!(
       name: name = 'Lead'
