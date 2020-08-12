@@ -1,4 +1,10 @@
 class Api::V1::ContactsController < ApplicationController
+  def index
+    contacts = contacts_service.list_contacts
+
+    render json: ContactSerializer.new(contacts, is_collection: true), status: :ok
+  end
+  
   def create
     contact = contacts_service.create_contact(contact_dto)
 

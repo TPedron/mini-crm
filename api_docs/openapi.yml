@@ -47,3 +47,19 @@ paths:
                   summary: Errors response
                   value:
                     $ref: "examples/api/v1/contact/create_request_error.example.json"
+    get:
+      tags:
+        - Contact
+      summary: List Contacts
+      responses:
+        200:
+          description: Contacts index response
+          content: 
+            application/vnd.api+json:
+              schema:
+                $ref: "schemas/api/v1/contact/index_response.schema.json"
+              examples:
+                response:
+                  summary: Contacts
+                  value:
+                    $ref: "examples/api/v1/contact/index_response.example.json"

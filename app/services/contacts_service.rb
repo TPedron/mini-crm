@@ -6,4 +6,12 @@ class ContactsService
       email: contact_dto.email
     )
   end
+
+  def list_contacts
+    # NOTE: Pagination would be implemented here.
+    Contact.order(
+      last_name: :asc,
+      first_name: :asc
+  )
+  end
 end

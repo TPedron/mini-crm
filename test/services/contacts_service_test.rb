@@ -35,6 +35,18 @@ class ContactsServiceTest < ActiveSupport::TestCase
     end
   end
 
+  test '#list_contacts - returns a list of all Contacts sorted by last_name & first_name ASC' do
+    contact_last = create(:contact, last_name: "Zebra")
+    contact_middle = create(:contact, first_name: 'Tom', last_name: "Apple")
+    contact_first = create(:contact, first_name: 'Alan',last_name: "Apple")
+    
+    contacts = @contacts_service.list_contacts
+    assert_equal 3,contacts.size
+    assert_equal contact_first, contacts.first
+    assert_equal contact_middle, contacts.second
+    assert_equal contact_last, contacts.last
+  end
+
   private
 
   def build_contact_dto(first_name:, last_name:, email:)
