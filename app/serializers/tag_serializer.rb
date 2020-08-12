@@ -5,5 +5,5 @@ class TagSerializer
   set_key_transform :camel_lower
   set_id :uuid
 
-  attributes :name
+  attribute :name
 end

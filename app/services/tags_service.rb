@@ -4,4 +4,9 @@ class TagsService
       name: tag_dto.name
     )
   end
+
+  def list_tags
+    # NOTE: Pagination would be implemented here.
+    Tag.order(name: :asc)
+  end
 end

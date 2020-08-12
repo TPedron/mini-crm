@@ -161,3 +161,19 @@ paths:
                   summary: Errors response
                   value:
                     $ref: "examples/api/v1/tag/create_request_error.example.json"
+    get:
+      tags:
+        - Tag
+      summary: List Tags
+      responses:
+        200:
+          description: Tags index response
+          content: 
+            application/vnd.api+json:
+              schema:
+                $ref: "schemas/api/v1/tag/index_response.schema.json"
+              examples:
+                response:
+                  summary: Tags
+                  value:
+                    $ref: "examples/api/v1/tag/index_response.example.json"
