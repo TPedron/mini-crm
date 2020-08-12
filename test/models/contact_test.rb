@@ -35,4 +35,14 @@ class ContactTest < ActiveSupport::TestCase
       )
     end
   end
+
+  test '#tag_names - returns a String list of Tags associated to the Contact' do
+    contact = create(:contact)
+    tag = create(:tag)
+    contact.tags << tag
+
+    tag_names = contact.tag_names
+    assert_equal 1, tag_names.size
+    assert_equal tag.name, tag_names.first
+  end
 end

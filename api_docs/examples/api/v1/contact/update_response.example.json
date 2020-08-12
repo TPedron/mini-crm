@@ -5,7 +5,8 @@
     "attributes": {
       "firstName": "Peter",
       "lastName": "Griffin",
-      "email": "pea.tear.griffin@gmail.com"
+      "email": "pea.tear.griffin@gmail.com",
+      "tags": [ "Lead" ]
     }
   }
 }

@@ -4,7 +4,8 @@
     "attributes": {
       "first_name": "Homer",
       "last_name": "Simpson",
-      "email": "homer.j.simpson@gmail.com"
+      "email": "homer.j.simpson@gmail.com",
+      "tags": [ "Lead" ]
     }
   }
 }

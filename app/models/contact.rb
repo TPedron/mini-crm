@@ -3,6 +3,11 @@ class Contact < ApplicationRecord
   validates :first_name, :last_name, :email, presence: true
   before_create :ensure_uuid # NOTE: work around for https://github.com/rails/rails/issues/34237
 
+  # NOTE: Used for serializing tag names as an attribute
+  def tag_names
+    tags.pluck(:name)
+  end
+
   private
 
   def ensure_uuid
