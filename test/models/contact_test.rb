@@ -16,6 +16,15 @@ class ContactTest < ActiveSupport::TestCase
     assert contact.updated_at
   end
 
+  test 'Can have a relationship to a Tag' do
+    contact = create(:contact)
+    tag = create(:tag)
+    contact.tags << tag
+    
+    assert 1, contact.tags.count
+    assert_equal tag.uuid, contact.tags.first.uuid
+  end
+
   test 'Cannot create with nil values' do
     assert_raises ActiveRecord::RecordInvalid do
       contact = Contact.create!(
