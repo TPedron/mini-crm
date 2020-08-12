@@ -17,6 +17,12 @@ class Api::V1::TagsController < ApplicationController
     render json: TagSerializer.new(tag), status: :ok
   end
 
+  def destroy
+    tags_service.find_and_delete_tag(tag_dto)
+
+    head :no_content
+  end
+
   private
 
   def tags_service

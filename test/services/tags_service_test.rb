@@ -55,6 +55,24 @@ class TagsServiceTest < ActiveSupport::TestCase
     assert_equal new_name, contact.tags.first.name
   end
 
+  test '#find_and_delete_tag deletes the tag' do
+    tag = create(:tag)
+    contact = create(:contact)
+    contact.tags << tag
+
+    tag_dto = build_tag_dto(
+      uuid: tag.uuid,
+      name: nil
+    )
+
+    assert_nothing_raised do
+      @tags_service.find_and_delete_tag(tag_dto)
+    end
+
+    contact.reload
+    assert contact.tags.empty?
+  end
+
   private
 
   def build_tag_dto(uuid:, name:)

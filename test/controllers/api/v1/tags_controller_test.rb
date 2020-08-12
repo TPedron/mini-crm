@@ -102,4 +102,28 @@ class Api::V1::TagsControllerTest < ActionDispatch::IntegrationTest
 
     assert_equal expected_error_response, json
   end
+
+  test 'DELETE - Delete Tag successfully' do
+    tag = create(:tag)
+
+    delete "/api/v1/tags/#{tag.uuid}"
+
+    assert_response :no_content
+  end
+
+  test 'DELETE - Delete Tag fails when already deleted' do
+    delete "/api/v1/tags/#{SecureRandom.uuid}"
+
+    json = response.parsed_body.each(&:deep_symbolize_keys!)
+
+    expected_error_response = [
+      {
+        status: 404,
+        title: "Couldn't find Tag",
+        detail: 'Tag not found'
+      }
+    ]
+
+    assert_equal expected_error_response, json
+  end
 end
