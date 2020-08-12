@@ -1,0 +1,10 @@
+{
+  "data": {
+    "type": "contact",
+    "attributes": {
+      "first_name": "Homer",
+      "last_name": "Simpson",
+      "email": "homer.j.simpson@gmail.com"
+    }
+  }
+}

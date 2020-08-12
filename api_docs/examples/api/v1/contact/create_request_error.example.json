@@ -1,0 +1,9 @@
+[
+  {
+    "status": 422,
+    "title": "can't be blank",
+    "source": {
+      "pointer": "/data/attributes/firstName"
+    }
+  }
+]
