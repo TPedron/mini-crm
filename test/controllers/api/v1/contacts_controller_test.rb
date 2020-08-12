@@ -18,6 +18,7 @@ class Api::V1::ContactsControllerTest < ActionDispatch::IntegrationTest
     contact = Contact.last
 
     assert_equal contact.uuid, json.dig(:data, :id)
+    refute contact.deleted
     assert_equal 'contact', json.dig(:data, :type)
     assert_equal expected_first_name, json.dig(:data, :attributes, :firstName)
     assert_equal contact.first_name, json.dig(:data, :attributes, :firstName)
@@ -71,7 +72,7 @@ class Api::V1::ContactsControllerTest < ActionDispatch::IntegrationTest
     assert_equal contact_last.last_name, json.dig(:data, 1, :attributes, :lastName)
   end
 
-  test 'PATCH - Update Contact fails when it cannot be found' do
+  test 'PATCH - Update Contact successfully' do
     contact = create(:contact)
 
     patch "/api/v1/contacts/#{contact.uuid}", params: {
@@ -90,6 +91,7 @@ class Api::V1::ContactsControllerTest < ActionDispatch::IntegrationTest
     contact.reload
     json = response.parsed_body.deep_symbolize_keys
 
+    refute contact.deleted
     assert_equal contact.uuid, json.dig(:data, :id)
     assert_equal 'contact', json.dig(:data, :type)
     assert_equal expected_first_name, json.dig(:data, :attributes, :firstName)
@@ -100,7 +102,7 @@ class Api::V1::ContactsControllerTest < ActionDispatch::IntegrationTest
     assert_equal contact.email, json.dig(:data, :attributes, :email)
   end
 
-  test 'PATCH - Update Contact successfully' do
+  test 'PATCH - Update Contact fails when it cannot be found' do
     patch "/api/v1/contacts/#{uuid = SecureRandom.uuid}", params: {
       data: {
         id: uuid,
@@ -114,13 +116,43 @@ class Api::V1::ContactsControllerTest < ActionDispatch::IntegrationTest
     }
 
     assert_response :not_found
-    json = response.parsed_body.deep_symbolize_keys
+    json = response.parsed_body.each(&:deep_symbolize_keys!)
 
-    expected_error_response = {
-      status: 404,
-      title: "Couldn't find Contact",
-      detail: 'Contact not found'
-    }
+    expected_error_response = [
+      {
+        status: 404,
+        title: "Couldn't find Contact",
+        detail: 'Contact not found'
+      }
+    ]
+
+    assert_equal expected_error_response, json
+  end
+
+  test 'DELETE - Delete Contact successfully' do
+    contact = create(:contact)
+
+    delete "/api/v1/contacts/#{contact.uuid}"
+
+    assert_response :no_content
+    contact.reload
+    assert contact.deleted
+  end
+
+  test 'DELETE - Delete Contact fails when already deleted' do
+    contact = create(:contact, deleted: true)
+
+    delete "/api/v1/contacts/#{contact.uuid}"
+
+    json = response.parsed_body.each(&:deep_symbolize_keys!)
+
+    expected_error_response = [
+      {
+        status: 404,
+        title: "Couldn't find Contact",
+        detail: 'Contact not found'
+      }
+    ]
 
     assert_equal expected_error_response, json
   end

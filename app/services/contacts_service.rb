@@ -9,7 +9,9 @@ class ContactsService
 
   def list_contacts
     # NOTE: Pagination would be implemented here.
-    Contact.order(
+    Contact.where(
+      deleted: false
+    ).order(
       last_name: :asc,
       first_name: :asc
     )
@@ -27,9 +29,22 @@ class ContactsService
     contact
   end
 
+  def find_and_soft_delete_contact(contact_dto)
+    contact = find_contact(contact_dto)
+
+    contact.update!(
+      deleted: true
+    )
+
+    contact
+  end
+
   private
 
   def find_contact(contact_dto)
-    Contact.find_by_uuid!(contact_dto.uuid)
+    Contact.find_by!(
+      uuid: contact_dto.uuid,
+      deleted: false
+    )
   end
 end

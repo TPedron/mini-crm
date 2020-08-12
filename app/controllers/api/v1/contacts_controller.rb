@@ -17,6 +17,12 @@ class Api::V1::ContactsController < ApplicationController
     render json: ContactSerializer.new(contact), status: :ok
   end
 
+  def destroy
+    contacts_service.find_and_soft_delete_contact(contact_dto)
+
+    head :no_content
+  end
+
   private
 
   def contacts_service

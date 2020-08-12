@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_200_812_024_317) do
+ActiveRecord::Schema.define(version: 20_200_812_142_634) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'pgcrypto'
   enable_extension 'plpgsql'
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 20_200_812_024_317) do
     t.string 'email', null: false
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
+    t.boolean 'deleted', default: false
     t.index ['email'], name: 'index_contacts_on_email'
     t.index ['first_name'], name: 'index_contacts_on_first_name'
     t.index ['last_name'], name: 'index_contacts_on_last_name'

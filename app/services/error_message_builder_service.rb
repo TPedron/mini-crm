@@ -21,14 +21,12 @@ class ErrorMessageBuilderService
   end
 
   private_class_method def self.handle_record_not_found(error)
-    {
-      errors: [
-        {
-          status: 404,
-          title: error.message,
-          detail: "#{error.model} not found"
-        }
-      ]
-    }
+    [
+      {
+        status: 404,
+        title: error.message,
+        detail: "#{error.model} not found"
+      }
+    ]
   end
 end

@@ -22,6 +22,7 @@ class ContactsServiceTest < ActiveSupport::TestCase
     assert contact.uuid
     assert contact.created_at
     assert contact.updated_at
+    refute contact.deleted
   end
 
   test '#create_contact - raises a RecordInvalid error when attribute validation fails' do
@@ -63,6 +64,7 @@ class ContactsServiceTest < ActiveSupport::TestCase
     assert_equal expected_first_name, updated_contact.first_name
     assert_equal expected_last_name, updated_contact.last_name
     assert_equal expected_email, updated_contact.email
+    refute updated_contact.deleted
   end
 
   test '#find_and_update_contact - fails to find the contact' do
@@ -76,6 +78,20 @@ class ContactsServiceTest < ActiveSupport::TestCase
     assert_raises ActiveRecord::RecordNotFound do
       @contacts_service.find_and_update_contact(contact_dto)
     end
+  end
+
+  test '#find_and_update_contact - find the contact and soft-delete' do
+    contact = create(:contact)
+    contact_dto = build_contact_dto(
+      uuid: contact.uuid,
+      first_name: nil,
+      last_name: nil,
+      email: nil
+    )
+
+    updated_contact = @contacts_service.find_and_soft_delete_contact(contact_dto)
+    assert_equal contact.uuid, updated_contact.uuid
+    assert updated_contact.deleted
   end
 
   private
