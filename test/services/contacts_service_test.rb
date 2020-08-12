@@ -10,7 +10,8 @@ class ContactsServiceTest < ActiveSupport::TestCase
       uuid: nil,
       first_name: expected_first_name = 'Homer',
       last_name: expected_last_name = 'Simpson',
-      email: expected_email = 'homer.j.simpson@gmail.com'
+      email: expected_email = 'homer.j.simpson@gmail.com',
+      tag_names: nil
     )
 
     contact = @contacts_service.create_contact(contact_dto)
@@ -25,12 +26,37 @@ class ContactsServiceTest < ActiveSupport::TestCase
     refute contact.deleted
   end
 
+  test '#create_contact - associates provided tag_names to Tags' do
+    lead_tag = create(:tag, name: 'Lead')
+    contact_dto = build_contact_dto(
+      uuid: nil,
+      first_name: expected_first_name = 'Homer',
+      last_name: expected_last_name = 'Simpson',
+      email: expected_email = 'homer.j.simpson@gmail.com',
+      tag_names: [lead_tag.name, 'Friend']
+    )
+
+    contact = @contacts_service.create_contact(contact_dto)
+    friend_tag = Tag.last
+
+    assert contact
+    assert_equal expected_first_name, contact.first_name
+    assert_equal expected_last_name, contact.last_name
+    assert_equal expected_email, contact.email
+    assert_equal [lead_tag.name, friend_tag.name], contact.tag_names
+    assert contact.uuid
+    assert contact.created_at
+    assert contact.updated_at
+    refute contact.deleted
+  end
+
   test '#create_contact - raises a RecordInvalid error when attribute validation fails' do
     contact_dto = build_contact_dto(
       uuid: nil,
       first_name: 'Homer',
       last_name: nil, # NOTE: last_name is required
-      email: 'homer.j.simpson@gmail.com'
+      email: 'homer.j.simpson@gmail.com',
+      tag_names: []
     )
 
     assert_raises ActiveRecord::RecordInvalid do
@@ -50,20 +76,25 @@ class ContactsServiceTest < ActiveSupport::TestCase
     assert_equal contact_last, contacts.last
   end
 
-  test '#find_and_update_contact - find the contact and updates' do
+  test '#find_and_update_contact - find the contact and updates attributes & tags' do
+    lead_tag = create(:tag, name: 'Lead')
     contact = create(:contact)
+    contact.tags << lead_tag
     contact_dto = build_contact_dto(
       uuid: contact.uuid,
       first_name: expected_first_name = 'Homer',
       last_name: expected_last_name = 'Simpson',
-      email: expected_email = 'homer.j.simpson@gmail.com'
+      email: expected_email = 'homer.j.simpson@gmail.com',
+      tag_names: ['Friend']
     )
 
     updated_contact = @contacts_service.find_and_update_contact(contact_dto)
+    friend_tag = Tag.last
     assert_equal contact.uuid, updated_contact.uuid
     assert_equal expected_first_name, updated_contact.first_name
     assert_equal expected_last_name, updated_contact.last_name
     assert_equal expected_email, updated_contact.email
+    assert_equal [friend_tag.name], contact.tag_names
     refute updated_contact.deleted
   end
 
@@ -72,7 +103,8 @@ class ContactsServiceTest < ActiveSupport::TestCase
       uuid: SecureRandom.uuid,
       first_name: 'Homer',
       last_name: 'Simpson',
-      email: 'homer.j.simpson@gmail.com'
+      email: 'homer.j.simpson@gmail.com',
+      tag_names: []
     )
 
     assert_raises ActiveRecord::RecordNotFound do
@@ -86,7 +118,8 @@ class ContactsServiceTest < ActiveSupport::TestCase
       uuid: contact.uuid,
       first_name: nil,
       last_name: nil,
-      email: nil
+      email: nil,
+      tag_names: nil
     )
 
     updated_contact = @contacts_service.find_and_soft_delete_contact(contact_dto)
@@ -96,12 +129,13 @@ class ContactsServiceTest < ActiveSupport::TestCase
 
   private
 
-  def build_contact_dto(uuid:, first_name:, last_name:, email:)
+  def build_contact_dto(uuid:, first_name:, last_name:, email:, tag_names:)
     contact_dto = ContactDto.new({})
     contact_dto.uuid = uuid
     contact_dto.first_name = first_name
     contact_dto.last_name = last_name
     contact_dto.email = email
+    contact_dto.tag_names = tag_names
     contact_dto
   end
 end

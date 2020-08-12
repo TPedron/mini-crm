@@ -1,11 +1,11 @@
 Metrics/BlockLength:
-  Max: 30
+  Max: 40
 
 Metrics/LineLength:
   Max: 120
 
 Metrics/MethodLength: 
-  Max: 30
+  Max: 40
 
 Metrics/ClassLength:
   Max: 1500
@@ -20,4 +20,7 @@ Style/FrozenStringLiteralComment:
   Enabled: false
 
 Style/MixinUsage:
+  Enabled: false
+
+Style/SymbolProc:
   Enabled: false

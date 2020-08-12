@@ -6,4 +6,8 @@ class ContactSerializer
   set_id :uuid
 
   attributes :first_name, :last_name, :email
+
+  attribute :tags do |contact|
+    contact.tag_names # NOTE: Returns Array of String
+  end
 end
