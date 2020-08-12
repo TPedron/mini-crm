@@ -87,6 +87,19 @@ class Api::V1::ContactsControllerTest < ActionDispatch::IntegrationTest
     assert_equal expected_tags, json.dig(:data, 1, :attributes, :tags)
   end
 
+  test 'GET - List contacts and search by tag name' do
+    contact = create(:contact)
+    create(:contact) # Does not have the tag, won't be returned in search
+    tag = create(:tag)
+    contact.tags << tag
+
+    get "/api/v1/contacts?tag=#{tag.name}"
+    assert_response :ok
+    json = response.parsed_body.deep_symbolize_keys
+    assert_equal 1, json.dig(:data).size
+    assert_equal contact.uuid, json.dig(:data, 0, :id)
+  end
+
   test 'PATCH - Update Contact successfully' do
     contact = create(:contact)
     tag = create(:tag)

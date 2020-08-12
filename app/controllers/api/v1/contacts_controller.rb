@@ -1,6 +1,6 @@
 class Api::V1::ContactsController < ApplicationController
   def index
-    contacts = contacts_service.list_contacts
+    contacts = contacts_service.list_contacts(tag_name_search_param)
 
     render json: ContactSerializer.new(contacts, is_collection: true), status: :ok
   end
@@ -27,6 +27,10 @@ class Api::V1::ContactsController < ApplicationController
 
   def contacts_service
     @contacts_service ||= ContactsService.new
+  end
+
+  def tag_name_search_param
+    params[:tag]
   end
 
   def hash_params
