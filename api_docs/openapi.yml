@@ -177,3 +177,39 @@ paths:
                   summary: Tags
                   value:
                     $ref: "examples/api/v1/tag/index_response.example.json"
+  /api/v1/tags/:tag_uuid:
+    patch:
+      tags:
+        - Tag
+      summary: Update a Tag
+      requestBody:
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: "schemas/api/v1/tag/update_request.schema.json"
+            examples:
+              new-tag:
+                summary: A new Tag
+                value:
+                  $ref: "examples/api/v1/tag/update_request.example.json"
+      responses:
+        200:
+          description: Tag Updated Response
+          content: 
+            application/vnd.api+json:
+              schema:
+                $ref: "schemas/api/v1/tag/update_response.schema.json"
+              examples:
+                response:
+                  summary: A newly created Tag
+                  value:
+                    $ref: "examples/api/v1/tag/update_response.example.json"
+        404:
+          description: Tag Not Found
+          content:
+            application/vnd.api+json:
+              examples:
+                errors:
+                  summary: Errors response
+                  value:
+                    $ref: "examples/api/v1/tag/update_request_error.example.json"
