@@ -18,3 +18,18 @@ Next, run git clone https://github.com/TPedron/mini-crm.git to clone the reposit
 The `Rubocop` gem has been installed. See `.rubocop.yml` for configurations.
 
 Run `rubocop` before merge and fix any linting issues presented.
+
+# API Docs
+
+You can generate the API Docs (written using OpenAPI) using the following command:
+
+`npx redoc-cli bundle --cdn -o min-crm-api-docs.html api_docs/openapi.yml`
+
+# Architecture
+
+This project implements the following architecture for handling API Requests:
+- Controller receives HTTP request + params
+- DataTransferObject (aka DTO) is created to parse the json body params into a PORO to decouple the API interface from the implementation.
+- The DTO is passed to an application Service to perform the required action(s).
+- The Services are the only files in the application that touch ActiveRecord to decople from the ORM
+- The ActiveRecord model is returned to the Controller and passed to serializer
