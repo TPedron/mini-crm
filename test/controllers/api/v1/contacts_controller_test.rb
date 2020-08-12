@@ -54,4 +54,20 @@ class Api::V1::ContactsControllerTest < ActionDispatch::IntegrationTest
 
     assert_equal expected_error_response, json
   end
+
+  test 'GET - List contacts ordered by last_name ASC successfully' do
+    contact_last = create(:contact, last_name: "Zebra")
+    contact_first = create(:contact, last_name: "Apple")
+
+    get '/api/v1/contacts'
+    assert_response :ok
+    json = response.parsed_body.deep_symbolize_keys
+    
+    assert json.dig(:data)
+    assert_equal 2, json.dig(:data).size
+    assert_equal contact_first.uuid, json.dig(:data, 0, :id)
+    assert_equal contact_first.last_name, json.dig(:data, 0, :attributes, :lastName)
+    assert_equal contact_last.uuid, json.dig(:data, 1, :id)
+    assert_equal contact_last.last_name, json.dig(:data, 1, :attributes, :lastName)
+  end
 end

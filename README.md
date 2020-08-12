@@ -7,25 +7,25 @@ First, if you don't already have it installed, please install Docker following t
 
 Next, run git clone https://github.com/TPedron/mini-crm.git to clone the repository to your local machine, then continue on to each subsection below.
 
-# Running the Application Using Docker
+## Running the Application Using Docker
 
 1. Run `docker-compose build` to build the backend image.
 2. Run `docker-compose up -d` to bring the API up, accepting requests at `http://localhost:3001`.
 3. Run `CONTAINERID=$(docker ps -qf "name=web"); docker exec -it $CONTAINERID rake db:migrate;docker exec -it $CONTAINERID rake db:setup` to setup the database.
 
-# Code Quality & Linting
+## Code Quality & Linting
 
 The `Rubocop` gem has been installed. See `.rubocop.yml` for configurations.
 
 Run `rubocop` before merge and fix any linting issues presented.
 
-# API Docs
+## API Docs
 
 You can generate the API Docs (written using OpenAPI) using the following command:
 
 `npx redoc-cli bundle --cdn -o min-crm-api-docs.html api_docs/openapi.yml`
 
-# Architecture
+## Architecture
 
 This project implements the following architecture for handling API Requests:
 - Controller receives HTTP request + params
