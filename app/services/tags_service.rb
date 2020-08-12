@@ -20,6 +20,11 @@ class TagsService
     tag
   end
 
+  def find_and_delete_tag(tag_dto)
+    tag = find_tag(tag_dto)
+    tag.destroy!
+  end
+
   private
 
   def find_tag(tag_dto)

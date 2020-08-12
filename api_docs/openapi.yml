@@ -213,3 +213,19 @@ paths:
                   summary: Errors response
                   value:
                     $ref: "examples/api/v1/tag/update_request_error.example.json"
+    delete:
+      tags:
+        - Tag
+      summary: Delete a Tag
+      responses:
+        204:
+          description: Tag Deleted Response
+        404:
+          description: Tag Not Found
+          content:
+            application/vnd.api+json:
+              examples:
+                errors:
+                  summary: Errors response
+                  value:
+                    $ref: "examples/api/v1/tag/delete_request_error.example.json"
