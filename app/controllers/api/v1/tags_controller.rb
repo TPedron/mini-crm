@@ -11,6 +11,12 @@ class Api::V1::TagsController < ApplicationController
     render json: TagSerializer.new(tag), status: :ok
   end
 
+  def update
+    tag = tags_service.find_and_update_tag(tag_dto)
+
+    render json: TagSerializer.new(tag), status: :ok
+  end
+
   private
 
   def tags_service

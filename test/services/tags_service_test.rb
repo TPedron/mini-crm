@@ -7,6 +7,7 @@ class TagsServiceTest < ActiveSupport::TestCase
 
   test '#find_or_create_tag - builds and returns a new Tag' do
     tag_dto = build_tag_dto(
+      uuid: nil,
       name: expected_name = 'Lead'
     )
 
@@ -22,6 +23,7 @@ class TagsServiceTest < ActiveSupport::TestCase
   test '#find_or_create_tag - builds and returns an existing Tag' do
     tag = create(:tag)
     tag_dto = build_tag_dto(
+      uuid: nil,
       name: tag.name
     )
 
@@ -32,10 +34,32 @@ class TagsServiceTest < ActiveSupport::TestCase
     assert_equal returned_tag.name, tag.name
   end
 
+  test '#find_and_update_tag - builds and returns an existing Tag' do
+    tag = create(:tag)
+    tag_dto = build_tag_dto(
+      uuid: tag.uuid,
+      name: new_name = 'Lead'
+    )
+
+    contact = create(:contact)
+    contact.tags << tag
+
+    returned_tag = @tags_service.find_and_update_tag(tag_dto)
+
+    assert returned_tag
+    assert_equal returned_tag.uuid, tag.uuid
+    assert_equal new_name, returned_tag.name
+
+    # Ensure tag is still associated to contact
+    contact.reload
+    assert_equal new_name, contact.tags.first.name
+  end
+
   private
 
-  def build_tag_dto(name:)
+  def build_tag_dto(uuid:, name:)
     tag_dto = TagDto.new({})
+    tag_dto.uuid = uuid
     tag_dto.name = name
     tag_dto
   end

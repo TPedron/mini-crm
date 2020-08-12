@@ -58,4 +58,48 @@ class Api::V1::TagsControllerTest < ActionDispatch::IntegrationTest
     assert_equal tag2.uuid, json.dig(:data, 0, :id)
     assert_equal tag1.uuid, json.dig(:data, 1, :id)
   end
+
+  test 'PATCH - Update Tag successfully' do
+    tag = create(:tag, name: 'Lead')
+
+    patch "/api/v1/tags/#{tag.uuid}", params: {
+      data: {
+        type: 'tag',
+        attributes: {
+          name: expected_name = 'Friend'
+        }
+      }
+    }
+
+    assert_response :ok
+    tag.reload
+    json = response.parsed_body.deep_symbolize_keys
+    assert_equal tag.uuid, json.dig(:data, :id)
+    assert_equal expected_name, json.dig(:data, :attributes, :name)
+    assert_equal expected_name, tag.name
+  end
+
+  test 'PATCH - Update Tag fails when not found' do
+    patch "/api/v1/tags/#{SecureRandom.uuid}", params: {
+      data: {
+        type: 'tag',
+        attributes: {
+          name: 'Friend'
+        }
+      }
+    }
+
+    assert_response :not_found
+    json = response.parsed_body.each(&:deep_symbolize_keys!)
+
+    expected_error_response = [
+      {
+        status: 404,
+        title: "Couldn't find Tag",
+        detail: 'Tag not found'
+      }
+    ]
+
+    assert_equal expected_error_response, json
+  end
 end
