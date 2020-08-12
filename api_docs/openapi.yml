@@ -64,7 +64,7 @@ paths:
                   value:
                     $ref: "examples/api/v1/contact/index_response.example.json"
   /api/v1/contacts/:contact_uuid:
-    post:
+    patch:
       tags:
         - Contact
       summary: Update a Contact
@@ -99,3 +99,19 @@ paths:
                   summary: Errors response
                   value:
                     $ref: "examples/api/v1/contact/update_request_error.example.json"
+    delete:
+      tags:
+        - Contact
+      summary: Delete a Contact
+      responses:
+        204:
+          description: Contact Deleted Response
+        404:
+          description: Contact Not Found
+          content:
+            application/vnd.api+json:
+              examples:
+                errors:
+                  summary: Errors response
+                  value:
+                    $ref: "examples/api/v1/contact/delete_request_error.example.json"
