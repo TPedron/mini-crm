@@ -11,9 +11,14 @@ class ContactsService
     contact
   end
 
-  def list_contacts
+  def list_contacts(tag_name_search_param = nil)
     # NOTE: Pagination would be implemented here.
-    Contact.where(
+    contact_repo = Contact
+    if tag_name_search_param.present?
+      contact_repo = Contact.joins(:tags).where('tags.name = :tag_name', { tag_name: tag_name_search_param })
+    end
+
+    contact_repo.where(
       deleted: false
     ).order(
       last_name: :asc,

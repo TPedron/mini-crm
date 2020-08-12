@@ -51,6 +51,13 @@ paths:
       tags:
         - Contact
       summary: List Contacts
+      parameters:
+        - in: path
+          name: tag
+          schema:
+            type: string
+          required: false
+          description: An optional filter on Tag name
       responses:
         200:
           description: Contacts index response

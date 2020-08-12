@@ -76,6 +76,27 @@ class ContactsServiceTest < ActiveSupport::TestCase
     assert_equal contact_last, contacts.last
   end
 
+  test '#list_contacts - allows for search based on tag name' do
+    contact_last = create(:contact, last_name: 'Zebra')
+    contact_first = create(:contact, last_name: 'Apple')
+    create(:contact) # not returned in search
+    tag = create(:tag)
+    contact_last.tags << tag
+    contact_first.tags << tag
+
+    contacts = @contacts_service.list_contacts(tag.name)
+    assert_equal 2, contacts.size
+    assert_equal contact_first, contacts.first
+    assert_equal contact_last, contacts.last
+  end
+
+  test '#list_contacts - returns empty list when tag does not exist' do
+    create(:contact)
+
+    contacts = @contacts_service.list_contacts('Tag Does Not Exist')
+    assert contacts.empty?
+  end
+
   test '#find_and_update_contact - find the contact and updates attributes & tags' do
     lead_tag = create(:tag, name: 'Lead')
     contact = create(:contact)
