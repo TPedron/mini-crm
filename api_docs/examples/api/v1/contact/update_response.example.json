@@ -1,0 +1,11 @@
+{
+  "data": {
+    "id": "66166eeb-81c5-49f8-a59e-21066593c63a",
+    "type": "contact",
+    "attributes": {
+      "firstName": "Peter",
+      "lastName": "Griffin",
+      "email": "pea.tear.griffin@gmail.com"
+    }
+  }
+}
