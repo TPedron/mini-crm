@@ -1,4 +1,10 @@
 class Api::V1::TagsController < ApplicationController
+  def index
+    tags = tags_service.list_tags
+
+    render json: TagSerializer.new(tags, is_collection: true), status: :ok
+  end
+
   def create
     tag = tags_service.find_or_create_tag(tag_dto)
 
