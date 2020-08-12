@@ -33,10 +33,6 @@ class Api::V1::ContactsController < ApplicationController
     params[:tag]
   end
 
-  def hash_params
-    @hash_params ||= params.to_unsafe_h.deep_transform_keys(&:underscore).deep_symbolize_keys
-  end
-
   def contact_dto
     @contact_dto ||= ContactDto.new(hash_params)
   end
