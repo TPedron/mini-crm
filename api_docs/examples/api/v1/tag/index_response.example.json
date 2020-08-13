@@ -1,11 +1,60 @@
 {
   "data": [
-    {
-      "id": "51683d46-0648-4ded-9e70-387961d59df0",
-      "type": "tag",
-      "attributes": {
-        "name": "Lead"
+      {
+          "id": "81e91641-f9fe-4a6f-8920-f167dec520fa",
+          "type": "tag",
+          "attributes": {
+              "name": "Churned"
+          }
+      },
+      {
+          "id": "f5032724-b715-458b-a9bf-3ed7ec22d3da",
+          "type": "tag",
+          "attributes": {
+              "name": "Finalized"
+          }
+      },
+      {
+          "id": "92df3876-58e4-4c96-96ce-bc42b3695a46",
+          "type": "tag",
+          "attributes": {
+              "name": "High Churn"
+          }
+      },
+      {
+          "id": "136b7e0a-6256-49f5-af88-146485f75d75",
+          "type": "tag",
+          "attributes": {
+              "name": "HighValue"
+          }
+      },
+      {
+          "id": "63d14642-f401-4816-9605-56411835992c",
+          "type": "tag",
+          "attributes": {
+              "name": "Lead"
+          }
+      },
+      {
+          "id": "ad0c0c70-1ebf-4fe3-9db6-533b30550bda",
+          "type": "tag",
+          "attributes": {
+              "name": "LowValue"
+          }
+      },
+      {
+          "id": "437a3159-c5d3-4491-9e4f-b82d3acf375b",
+          "type": "tag",
+          "attributes": {
+              "name": "RealEstate"
+          }
+      },
+      {
+          "id": "d49874a8-ab8e-41ce-b1b2-4ea29d64e574",
+          "type": "tag",
+          "attributes": {
+              "name": "Stage2"
+          }
       }
-    }
   ]
 }

@@ -1,14 +1,46 @@
 {
   "data": [
-    {
-      "id": "51683d46-0648-4ded-9e70-387961d59df0",
-      "type": "contact",
-      "attributes": {
-        "firstName": "Homer",
-        "lastName": "Simpson",
-        "email": "homer.j.simpson@gmail.com",
-        "tags": [ "Lead" ]
+      {
+          "id": "a362efca-209e-44c9-9a11-4ab713d3b0a8",
+          "type": "contact",
+          "attributes": {
+              "firstName": "Bob",
+              "lastName": "Rodriguez",
+              "email": "bob@yahoo.com",
+              "tags": [
+                  "Lead",
+                  "Stage2",
+                  "LowValue"
+              ]
+          }
+      },
+      {
+          "id": "57988be9-77e7-4fcf-94eb-e4f3882d1f7a",
+          "type": "contact",
+          "attributes": {
+              "firstName": "Cathy",
+              "lastName": "Smith",
+              "email": "cathy@lycos.com",
+              "tags": [
+                  "Finalized",
+                  "Churned",
+                  "RealEstate"
+              ]
+          }
+      },
+      {
+          "id": "74a63002-5c22-4c45-9af7-dc21cadc40fd",
+          "type": "contact",
+          "attributes": {
+              "firstName": "Andrew",
+              "lastName": "Stevens",
+              "email": "andrew@company.com",
+              "tags": [
+                  "Lead",
+                  "HighValue",
+                  "Finalized"
+              ]
+          }
       }
-    }
   ]
 }
