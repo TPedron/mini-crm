@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.2">
+  <zoom_level>7</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>273</x>
+      <y>112</y>
+      <w>126</w>
+      <h>112</h>
+    </coordinates>
+    <panel_attributes>Contact (public.contacts)
+--
+id (INT, PK)
+uuid (STRING)
+first_name (STRING)
+last_name (STRING)
+email (STRING)
+created_at (DATETIME)
+updated_at (DATETIME)
+deleted (BOOL)
+bg=yellow</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>714</x>
+      <y>126</y>
+      <w>133</w>
+      <h>84</h>
+    </coordinates>
+    <panel_attributes>Tag (public.tags)
+--
+id (INT, PK)
+uuid (STRING)
+name (STRING)
+created_at (DATETIME)
+updated_at (DATETIME)
+bg=red</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>462</x>
+      <y>112</y>
+      <w>196</w>
+      <h>49</h>
+    </coordinates>
+    <panel_attributes>Contact x Tag (public.contacts_tags)
+--
+contact_id (INT)
+tag_id (INT)
+bg=green</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>322</x>
+      <y>126</y>
+      <w>154</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+bg=yellow</panel_attributes>
+    <additional_attributes>200.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>518</x>
+      <y>140</y>
+      <w>210</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+bg=red</panel_attributes>
+    <additional_attributes>10.0;10.0;280.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Text</id>
+    <coordinates>
+      <x>399</x>
+      <y>119</y>
+      <w>63</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>.*           .*
+style=wordwrap</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Text</id>
+    <coordinates>
+      <x>658</x>
+      <y>133</y>
+      <w>63</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>.*          .*
+style=wordwrap</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
