@@ -21,18 +21,32 @@ This project implements the following architecture for handling API Requests:
 
 ### Models
 
+#### ERD
+Below is an entity-relationship diagram for the database schema.
+
+![ERD](uml/export/erd-v1.0.png)
+
 #### Contacts
 
 - Contacts have a many to many relationship to Tags
 - Contacts are soft deleted (see `deleted` bool field)
 - Tags can be added or removed from a Contact through the Contact POST & PATCH endpoints.
+  - This works by performing find_or_creates by the provided name(s) and then updating the associations accordingly.
 - From an API perspective, Tags are an attribute of Contact to simplify API usage.
+
+Below is sequence diagram for basic CRUD on Contacts:
+
+![Contact CRUD](uml/export/contact-crud-sequence-diagram-v1.0.png)
 
 #### Tags
 
 - Tags have a many to many relationship to Contacts
 - Tags are hard deleted
 - It is impossible to create duplicate tags since all create actions are actually find_or_creates.  This was done to increase referential data integrity and to reduce the amount of duplicate data in the system.
+
+Below is sequence diagram for basic CRUD on Tags:
+
+![Tag CRUD](uml/export/tag-crud-sequence-diagram-v1.0.png)
 
 ## Installation
 
