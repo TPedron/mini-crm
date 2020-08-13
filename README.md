@@ -57,8 +57,9 @@ Next, run git clone https://github.com/TPedron/mini-crm.git to clone the reposit
 ## Running the Application Using Docker
 
 1. Run `docker-compose build` to build the backend image.
-2. Run `docker-compose up -d` to bring the API up, accepting requests at `http://localhost:3001`.
-3. Run `CONTAINERID=$(docker ps -qf "name=web"); docker exec -it $CONTAINERID rake db:migrate;docker exec -it $CONTAINERID rake db:setup` to setup the database.
+2. Run `docker-compose up -d` to bring the API up, accepting requests at `http://localhost:3000`.
+3. Run `CONTAINERID=$(docker ps -qf "name=web"); docker exec -it $CONTAINERID rake db:migrate;docker exec -it $CONTAINERID rake db:setup;docker exec -it $CONTAINERID rake db:seed` to setup the database and add seeds.
+4. If you need to, enter the container using `CONTAINERID=$(docker ps -qf "name=web"); docker exec -it $CONTAINERID bash`
 
 ## API Docs
 
