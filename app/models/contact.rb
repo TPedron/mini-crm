@@ -7,7 +7,7 @@ class Contact < ApplicationRecord
 
   # NOTE: Used for serializing tag names as an attribute
   def tag_names
-    tags.pluck(:name)
+    tags.pluck(:name).uniq
   end
 
   private
