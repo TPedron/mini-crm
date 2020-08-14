@@ -10,6 +10,19 @@
 			"item": [
 				{
 					"name": "Create Contact",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "bede5135-fb62-4922-a5f0-e7ae25bd30d7",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"CONTACT_UUID\",jsonData.data.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -42,7 +55,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{HOST}}/api/v1/contacts",
+							"raw": "{{HOST}}/api/v1/contacts?tag=Lead",
 							"host": [
 								"{{HOST}}"
 							],
@@ -50,6 +63,12 @@
 								"api",
 								"v1",
 								"contacts"
+							],
+							"query": [
+								{
+									"key": "tag",
+									"value": "Lead"
+								}
 							]
 						}
 					},
@@ -121,6 +140,19 @@
 			"item": [
 				{
 					"name": "Create Tag",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8d45682f-4d8b-4677-baef-3706434062a3",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"TAG_UUID\",jsonData.data.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],

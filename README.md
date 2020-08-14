@@ -75,7 +75,7 @@ Run `rubocop` before merge and fix any linting issues presented.
 
 ## Postman
 
-A Postman collection with requests defined for all endpoints can be found in the `/postman` directory along with an environment file.  Please load both and set your environment values for `CONTACT_UUID` and `TAG_UUID` accordingly after creating records with the POST calls.
+A Postman collection with requests defined for all endpoints can be found in the `/postman` directory along with an environment file. The environment variables `CONTACT_UUID` and `TAG_UUID` are used in PATCH and DELETE requests and are auto-set after POST calls.
 
 ## Notes
 
@@ -83,4 +83,4 @@ A Postman collection with requests defined for all endpoints can be found in the
   - Pagination on the Contact & Tag index endpoints
   - More filter options on the Contact index endpoint
   - Contact Show endpoint (`/api/v1/contacts/:contact_uuid`)
-  - Improve the Postman suite to validate response JSON returned and autoset environment variables.
+  - Improve the Postman suite to validate response JSON returned.
