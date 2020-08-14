@@ -10,6 +10,19 @@
 			"item": [
 				{
 					"name": "Create Contact",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "bede5135-fb62-4922-a5f0-e7ae25bd30d7",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"CONTACT_UUID\",jsonData.data.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -42,7 +55,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{HOST}}/api/v1/contacts",
+							"raw": "{{HOST}}/api/v1/contacts?tag=Lead",
 							"host": [
 								"{{HOST}}"
 							],
@@ -50,6 +63,12 @@
 								"api",
 								"v1",
 								"contacts"
+							],
+							"query": [
+								{
+									"key": "tag",
+									"value": "Lead"
+								}
 							]
 						}
 					},
@@ -62,7 +81,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"data\": {\n    \"id\": \"4ca31468-d66c-4139-9b98-9ec9b43b9b59\",\n    \"type\": \"contact\",\n    \"attributes\": {\n      \"first_name\": \"Homer\",\n      \"last_name\": \"Simpson\",\n      \"email\": \"homer.j.simpson@gmail.com\",\n      \"tags\": [\n        \"Lead\",\n        \"High Churn\"\n      ]\n    }\n  }\n}",
+							"raw": "{\n  \"data\": {\n    \"id\": \"{{CONTACT_UUID}}\",\n    \"type\": \"contact\",\n    \"attributes\": {\n      \"first_name\": \"Homer\",\n      \"last_name\": \"Simpson\",\n      \"email\": \"homer.j.simpson@gmail.com\",\n      \"tags\": [\n        \"Lead\",\n        \"High Churn\"\n      ]\n    }\n  }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -121,6 +140,19 @@
 			"item": [
 				{
 					"name": "Create Tag",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8d45682f-4d8b-4677-baef-3706434062a3",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"TAG_UUID\",jsonData.data.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -185,7 +217,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"data\": {\n    \"id\": \"ca2ca748-5ded-454f-a54b-6d7013b88f99\",\n    \"type\": \"tag\",\n    \"attributes\": {\n      \"name\": \"High Value\"\n    }\n  }\n}",
+							"raw": "{\n  \"data\": {\n    \"id\": \"{{TAG_UUID}}\",\n    \"type\": \"tag\",\n    \"attributes\": {\n      \"name\": \"High Value\"\n    }\n  }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
